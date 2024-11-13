@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Crypto Tap</title>
+        <script src="./scripts/telegam-web-app.js"></script>
+        <script
+            src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
+        <link rel="stylesheet" href="styles/styles.css">
+        <link rel="stylesheet" href="styles/loading.css">
+        <link rel="stylesheet" href="styles/home.css">
+        <link rel="stylesheet" href="styles/boost.css">
+        <link rel="stylesheet" href="styles/task.css">
+        <link rel="stylesheet" href="styles/referral.css">
+        <link rel="stylesheet" href="styles/wallet.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet"
+            href="font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <div class="content">
+            <div class="homePage" id="home">
+                <div class="game-area">
+                    <div class="stats">
+                        <div class="coins">
+                            <img src="img/coin_small.png" alt="Coin"
+                                class="coin-small">
+                            <span id="homeCoinsDisplay">0</span>
+                        </div>
+                        <div class="league">
+                            <i class="fas fa-trophy"></i>
+                            <span id="homeLeagueDisplay">Bronze</span>
+                        </div>
+                    </div>
+                    <div id="clickValue" class="click-value"></div>
+                    <img src="img/coin_verylarg.png" alt="Large Coin"
+                        id="largeCoin" class="coin-large">
+                    <div class="energy-bar">
+                        <div class="progress-bar">
+                            <div id="energyProgress" class="progress"></div>
+                            <span id="energyDisplay">0 / 100</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="boostPage" id="boost">
+                <div class="stats">
+                    <div class="coins">
+                        <img src="img/coin_small.png" alt="Coin"
+                            class="coin-small">
+                        <span id="boostCoinsDisplay">0</span>
+                    </div>
+                    <div class="league">
+                        <i class="fas fa-trophy"></i>
+                        <span id="boostLeagueDisplay">Bronze</span>
+                    </div>
+                </div>
+                <h3 class="daily-booster">Daily Booster:</h3>
+                <div class="booster-buttons">
+                    <button class="booster-btn" onclick="boostingTap()">
+                        <div class="btn-left">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="btn-right">
+                            <span class="title">Tap Boost</span>
+                            <span class="info">3 /<span
+                                    id="boost_tap_cont">0</span></span>
+                        </div>
+                    </button>
+                    <button class="booster-btn" onclick="fullCharge()">
+                        <div class="btn-left">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="btn-right">
+                            <span class="title">Full Tank</span>
+                            <span class="info">3 /<span
+                                    id="full_chargh_cont">0</span></span>
+                        </div>
+                    </button>
+                </div>
+                <h3 class="daily-booster">Boosters:</h3>
+                <div class="booster-grid">
+                    <div class="boost-item" onclick="upgradeMultitap()">
+                        <div class="btn-left">
+                            <i class="fas fa-hand-pointer"></i>
+                        </div>
+                        <div class="btn-right">
+                            <span class="title">Multitap</span>
+                            <div class="info">
+                                <img src="img/coin_verysmall.png" alt="Coin"
+                                    class="coin-very-small">
+                                <span id="feeCoinTap">250</span>
+                                <span id="lvlCoinTap">1 level</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="boost-item" onclick="upgradeEnergyLimit()">
+                        <div class="btn-left">
+                            <i class="fas fa-battery-full"></i>
+                        </div>
+                        <div class="btn-right">
+                            <span class="title">Energy Limit</span>
+                            <div class="info">
+                                <img src="img/coin_verysmall.png" alt="Coin"
+                                    class="coin-very-small">
+                                <span id="feeTotalEnergy">250</span>
+                                <span id="lvlTotalEnergy">1 level</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="boost-item" onclick="upgradeRecharging()">
+                        <div class="btn-left">
+                            <i class="fas fa-charging-station"></i>
+                        </div>
+                        <div class="btn-right">
+                            <span class="title">Recharging</span>
+                            <div class="info">
+                                <img src="img/coin_verysmall.png" alt="Coin"
+                                    class="coin-very-small">
+                                <span id="feeRegEnergy">25000</span>
+                                <span id="lvlRegEnergy">1 level</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="boost-item" onclick="buyBot()">
+                        <div class="btn-left">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="btn-right">
+                            <span class="title">Tap Bot</span>
+                            <div class="info">
+                                <img src="img/coin_verysmall.png" alt="Coin"
+                                    class="coin-very-small">
+                                <span id="feeCoinTap">2000000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="taskPage" id="task">
+                <div class="stats">
+                    <div class="coins">
+                        <img src="img/coin_small.png" alt="Coin"
+                            class="coin-small">
+                        <span id="taskCoinsDisplay">0</span>
+                    </div>
+                    <div class="league">
+                        <i class="fas fa-trophy"></i>
+                        <span id="taskLeagueDisplay">Bronze</span>
+                    </div>
+                </div>
+                <div class="task-container">
+                    <h3 class="task-title">Tasks List:</h3>
+                    <ul class="task-list">
+                        <li class="task-item" onclick="watchYoutube()">
+                            <i class="fa fa-youtube-play fa-5x"></i>
+                            <div class="task-info">
+                                <span class="task-name">Watch Youtube</span>
+                                <div class="task-details">
+                                    <img src="img/coin_verysmall.png" alt="Coin"
+                                        class="coin-very-small">
+                                    <span class="task-cost"
+                                        id="feeCoinTap">1000</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                        <li class="task-item" onclick="invite3Friends()">
+                            <i class="fa fa-user-o fa-5x"></i>
+                            <div class="task-info">
+                                <span class="task-name">Invite 3 Friends </span>
+                                <div class="task-details">
+                                    <img src="img/coin_verysmall.png" alt="Coin"
+                                        class="coin-very-small">
+                                    <span class="task-cost"
+                                        id="feeCoinTap">5000</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                        <li class="task-item" onclick="connectWallet()">
+                            <i class="fa fa-google-wallet fa-5x"></i>
+                            <div class="task-info">
+                                <span class="task-name">Wallet Connected</span>
+                                <div class="task-details">
+                                    <img src="img/coin_verysmall.png" alt="Coin"
+                                        class="coin-very-small">
+                                    <span class="task-cost"
+                                        id="feeCoinTap">2000</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                        <li class="task-item" onclick="FollowOnTwitter()">
+                            <i class="fa fa-twitter fa-5x"></i>
+                            <div class="task-info">
+                                <span class="task-name">Follow Twitter</span>
+                                <div class="task-details">
+                                    <img src="img/coin_verysmall.png" alt="Coin"
+                                        class="coin-very-small">
+                                    <span class="task-cost"
+                                        id="feeCoinTap">10000</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                        <li class="task-item" onclick="watchYoutube()">
+                            <i class="fa fa-youtube-play fa-5x"></i>
+                            <div class="task-info">
+                                <span class="task-name">Watch Youtube</span>
+                                <div class="task-details">
+                                    <img src="img/coin_verysmall.png" alt="Coin"
+                                        class="coin-very-small">
+                                    <span class="task-cost"
+                                        id="feeCoinTap">1000</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                        <li class="task-item" onclick="invite3Friends()">
+                            <i class="fa fa-user-o fa-5x"></i>
+                            <div class="task-info">
+                                <span class="task-name">Invite 3 Friends </span>
+                                <div class="task-details">
+                                    <img src="img/coin_verysmall.png" alt="Coin"
+                                        class="coin-very-small">
+                                    <span class="task-cost"
+                                        id="feeCoinTap">5000</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                        <li class="task-item" onclick="connectedWallet()">
+                            <i class="fa fa-google-wallet fa-5x"></i>
+                            <div class="task-info">
+                                <span class="task-name">Wallet Connected</span>
+                                <div class="task-details">
+                                    <img src="img/coin_verysmall.png" alt="Coin"
+                                        class="coin-very-small">
+                                    <span class="task-cost"
+                                        id="feeCoinTap">2000</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                        <li class="task-item" onclick="FollowOnTwitter()">
+                            <i class="fa fa-twitter fa-5x"></i>
+                            <div class="task-info">
+                                <span class="task-name">Follow Twitter</span>
+                                <div class="task-details">
+                                    <img src="img/coin_verysmall.png" alt="Coin"
+                                        class="coin-very-small">
+                                    <span class="task-cost"
+                                        id="feeCoinTap">10000</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="referralPage" id="referral">
+                <div class="referral-card">
+                    <div class="referral-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h2>Invite Friends</h2>
+                    <p>Receive 5000 coins for each friend invitation</p>
+                    <div class="referral-code">
+                        <span id="referralCode">ABC123</span>
+                        <button class="copy-btn" onclick="copyReferralCode()">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="rewards-list">
+                    <h3>Invitation Rewards</h3>
+                    <div class="reward-item">
+                        <div class="reward-info">
+                            <i class="fas fa-user-plus"></i>
+                            <span>1 Friend</span>
+                        </div>
+                        <div class="reward-value">
+                            <img src="img/coin_verysmall.png" alt="Coin"
+                                class="coin-very-small">
+                            <span>5000</span>
+                        </div>
+                    </div>
+                    <div class="reward-item">
+                        <div class="reward-info">
+                            <i class="fas fa-users"></i>
+                            <span>5 Friends</span>
+                        </div>
+                        <div class="reward-value">
+                            <img src="img/coin_verysmall.png" alt="Coin"
+                                class="coin-very-small">
+                            <span>30000</span>
+                        </div>
+                    </div>
+                    <div class="reward-item">
+                        <div class="reward-info">
+                            <i class="fas fa-user-astronaut"></i>
+                            <span>10 Friends</span>
+                        </div>
+                        <div class="reward-value">
+                            <img src="img/coin_verysmall.png" alt="Coin"
+                                class="coin-very-small">
+                            <span>100000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="invited-users-list">
+                    <h3>Invited Players</h3>
+                    <div class="user-list">
+                        <div class="user-item">
+                            <div class="user-info">
+                                <i class="fas fa-user-circle"></i>
+                                <span>John Doe</span>
+                            </div>
+                            <div class="user-level">
+                                <img src="img/coin_verysmall.png" alt="Coin"
+                                    class="coin-very-small">
+                                <span>Level 5</span>
+                            </div>
+                        </div>
+                        <div class="user-item">
+                            <div class="user-info">
+                                <i class="fas fa-user-circle"></i>
+                                <span>Alice Smith</span>
+                            </div>
+                            <div class="user-level">
+                                <img src="img/coin_verysmall.png" alt="Coin"
+                                    class="coin-very-small">
+                                <span>Level 3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="walletPage" id="wallet">
+                <div class="wallet-container">
+                    <div class="wallet-connect">
+                        <div id="ton-connect-button"></div>
+                        <div class="total-balance">
+                            <span>$</span>
+                            <span class="balance-value">0</span>
+                        </div>
+                        <div class="wallet-actions">
+                            <div class="action-item">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>Receive</span>
+                            </div>
+                            <div class="action-item">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>Send</span>
+                            </div>
+                            <div class="action-item">
+                                <i class="fas fa-history"></i>
+                                <span>History</span>
+                            </div>
+                            <div class="action-item">
+                                <i class="fas fa-layer-group"></i>
+                                <span>Stake</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wallet-assets" id="walletAssets">
+                        <div class="asset-item">
+                            <i class="fab fa-bitcoin"></i>
+                            <div class="asset-info">
+                                <span class="asset-name">BTC</span>
+                                <span class="asset-balance"
+                                    id="ethBalance">0.0</span>
+                            </div>
+                        </div>
+
+                        <div class="asset-item">
+                            <i class="fab fa-ethereum"></i>
+                            <div class="asset-info">
+                                <span class="asset-name">ETH</span>
+                                <span class="asset-balance"
+                                    id="ethBalance">0.0</span>
+                            </div>
+                        </div>
+
+                        <div class="asset-item">
+                            <i class="fa fa-usd"></i>
+                            <div class="asset-info">
+                                <span class="asset-name">USD</span>
+                                <span class="asset-balance"
+                                    id="usdtBalance">0.0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="loading-page" id="loadingPage">
+                <div class="rainbow-progress"></div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube-play"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+        <nav class="mobile-nav">
+            <button class="nav-item active" data-page="home">
+                <div class="icon-container">
+                    <i class="fas fa-home"></i>
+                </div>
+                <span>Home</span>
+            </button>
+            <button class="nav-item" data-page="boost">
+                <div class="icon-container">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <span>Boost</span>
+            </button>
+            <button class="nav-item" data-page="task">
+                <div class="icon-container">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <span>Task</span>
+            </button>
+            <button class="nav-item" data-page="referral">
+                <div class="icon-container">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <span>Referral</span>
+            </button>
+            <button class="nav-item" data-page="wallet">
+                <div class="icon-container">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <span>Wallet</span>
+            </button>
+        </nav>
+        <script src="scripts/game.js"></script>
+        <script src="scripts/script.js"></script>
+    </body>
+</html>

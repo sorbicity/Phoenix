@@ -1,0 +1,7 @@
+{
+  "url": "http://localhost:3000",
+  "name": "Spinner Game",
+  "iconUrl": "http://localhost:3000/img/icon.png",
+  "termsOfUseUrl": "http://localhost:3000/terms",
+  "privacyPolicyUrl": "http://localhost:3000/privacy"
+}

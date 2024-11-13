@@ -1,0 +1,209 @@
+.walletPage {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 85px;
+    background: hsl(209, 25%, 17%);
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.wallet-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.wallet-connect {
+    text-align: center;
+    padding: 20px;
+}
+
+.connect-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    transition: all 0.3s ease;
+}
+
+.connect-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+}
+
+.wallet-address {
+    background: rgba(17, 25, 40, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.address-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(59, 130, 246, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.wallet-assets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 10px;
+}
+
+.asset-item {
+    background: rgba(17, 25, 40, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: white;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.asset-item i {
+    font-size: 2rem;
+    color: #3b82f6;
+}
+
+.asset-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.asset-name {
+    font-weight: bold;
+}
+
+.asset-balance {
+    opacity: 0.8;
+}
+
+.total-balance {
+    margin-top: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.balance-value {
+    color: #ffffff;
+    font-weight: bold;
+    margin-left: 0;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.asset-item .fa-usd {
+    color: #26A17B !important;
+    text-shadow: 0 0 10px rgba(38, 161, 123, 0.5);
+}
+.asset-item .fa-bitcoin {
+    color: #9fa126 !important;
+    text-shadow: 0 0 10px rgba(161, 159, 38, 0.5);
+}
+.asset-item .fa-ethereum {
+    color: #2651a1 !important;
+    text-shadow: 0 0 10px rgba(38, 91, 161, 0.5);
+}
+
+.address-text {
+    color: #ffffff;
+    font-size: 1.1rem;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.connect-btn.connected {
+    background: rgba(59, 130, 246, 0.1);
+    justify-content: space-between;
+    padding: 10px 15px;
+}
+
+.connect-btn .copy-btn {
+    background: transparent;
+    border: none;
+    color: #3b82f6;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.connect-btn .copy-btn:hover {
+    color: #60a5fa;
+}
+
+.wallet-actions {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 30px;
+    padding: 0 5px;
+}
+  .action-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: #ffffff;
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+  }
+
+  .action-item i {
+      font-size: 24px;
+      width: 50px;
+      height: 50px;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      color: rgba(255, 255, 255, 0.5);
+  }
+
+  .action-item:hover i {
+      background: rgba(59, 130, 246, 0.2);
+      transform: translateY(-2px);
+  }
+
+  .action-item span {
+      font-size: 16px;
+      opacity: 0.8;
+  }
+
+  /* حذف این بخش که history را فعال می‌کرد
+  .action-item:nth-child(3) {
+      opacity: 1;
+      cursor: pointer;
+      pointer-events: auto;
+  }
+
+  .action-item:nth-child(3) i {
+      color: #3b82f6;
+  }
+  */
+#ton-connect-button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
