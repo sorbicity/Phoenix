@@ -21,7 +21,21 @@ let hasTapBot = false;
 // const tg = window.Telegram.WebApp;
 // tg.expand(); //گسترش صفحه به تمام صفحه
 
-const tg = window.Telegram.WebApp;
+
+let tg = window.Telegram?.WebApp || {
+  expand: () => { },
+  backgroundColor: '#1e293b',
+  textColor: '#ffffff',
+};
+// تنظیم تم تلگرام
+tg.setHeaderColor('#1e293b');
+tg.setBackgroundColor('#1e293b');
+
+// تنظیم رنگ متن و آیکون‌ها
+document.documentElement.style.setProperty('--tg-theme-bg-color', '#1e293b');
+document.documentElement.style.setProperty('--tg-theme-text-color', '#ffffff');
+document.documentElement.style.setProperty('--tg-theme-button-color', '#3b82f6');
+document.documentElement.style.setProperty('--tg-theme-button-text-color', '#ffffff');
 
 const userState = {
   userId: tg.initDataUnsafe?.user?.id,
@@ -68,6 +82,16 @@ const userState = {
 
 // ذخیره در CloudStorage تلگرام
 function saveUserState() {
+  userState.game.coins = coins;
+  userState.game.currentLeague = league;
+  userState.game.highestLeague = highestLeague;
+  userState.game.energy.max = tEnergy;
+  userState.game.energy.current = energy;
+  userState.upgrades.multitapLevel = multitapLevel;
+  userState.upgrades.energyLimitLevel = energyLimitLevel;
+  userState.upgrades.rechargingLevel = rechargingLevel;
+  userState.upgrades.hasTapBot = hasTapBot;
+
   tg.CloudStorage.setItem('userState', JSON.stringify(userState));
 }
 
@@ -76,10 +100,23 @@ async function loadUserState() {
   const saved = await tg.CloudStorage.getItem('userState');
   if (saved) {
     Object.assign(userState, JSON.parse(saved));
+
+    // همگام‌سازی متغیرهای بازی با userState
+    coins = userState.game.coins;
+    league = userState.game.currentLeague;
+    highestLeague = userState.game.highestLeague;
+    tEnergy = userState.game.energy.max;
+    energy = userState.game.energy.current;
+    clickP = userState.upgrades.multitapLevel + 1;
+    regen = userState.upgrades.rechargingLevel + 1;
+    multitapLevel = userState.upgrades.multitapLevel;
+    energyLimitLevel = userState.upgrades.energyLimitLevel;
+    rechargingLevel = userState.upgrades.rechargingLevel;
+    hasTapBot = userState.upgrades.hasTapBot;
+
     updateAllDisplays();
   }
 }
-
 // آپدیت خودکار
 setInterval(saveUserState, 30000);
 
