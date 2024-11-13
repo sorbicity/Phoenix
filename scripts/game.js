@@ -469,7 +469,7 @@ function closeOfflineModal() {
 }
 
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-  manifestUrl: '/tonconnect-manifest.json',
+  manifestUrl: 'https://sorbicity.github.io/Phoenix/tonconnect-manifest.json',
   buttonRootId: 'ton-connect-button',
 });
 
