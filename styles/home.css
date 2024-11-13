@@ -7,6 +7,7 @@
     background: hsl(209, 25%, 17%);
     overflow: hidden;
 }
+
 /* افکت ذرات معلق */
 .homePage::before {
     content: '';
@@ -37,7 +38,6 @@
     opacity: 0.6;
 }
 
-
 @keyframes floatingParticles {
     0% {
         transform: translateY(0) rotate(0deg);
@@ -52,6 +52,7 @@
         transform: translateY(0) rotate(360deg);
     }
 }
+
 /* Header styles */
 .homePage .game-area {
     display: flex;
@@ -102,7 +103,6 @@
     z-index: 1;
 }
 
-
 .homePage .coins img {
     animation: coinRotate 5s linear infinite;
 }
@@ -128,6 +128,7 @@
     font-size: 1.2rem;
     font-weight: 500;
 }
+
 .homePage .coin-small {
     width: 30px;
     height: 30px;
@@ -138,8 +139,17 @@
     font-weight: bold;
 }
 
+.click-value {
+    position: fixed;
+    color: #3b82f6;
+    font-weight: bold;
+    font-size: 1.5rem;
+    pointer-events: none;
+    z-index: 998;  /* کمتر از z-index سکه */
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    will-change: transform, opacity;
+}
 
-/* Large coin styles */
 .coin-large {
     position: absolute;
     top: 60%;
@@ -153,7 +163,7 @@
     -ms-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
-
+    z-index: 999;  /* بیشتر از z-index عدد */
 }
 
 .coin-cover {
@@ -195,18 +205,16 @@
 }
 
 .coin-cover span {
-text-shadow: 
-    0 0 10px rgba(5, 5, 5, 0.8),
-    0 0 20px rgba(58, 92, 148, 0.5),
-    0 0 30px rgba(15, 106, 252, 0.3);
+    text-shadow: 
+        0 0 10px rgba(5, 5, 5, 0.8),
+        0 0 20px rgba(58, 92, 148, 0.5),
+        0 0 30px rgba(15, 106, 252, 0.3);
 }
-
 
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
 }
-
 
 @keyframes slideCover {
     from {
@@ -219,53 +227,17 @@ text-shadow:
     }
 }
 
-
 /* Click value animation */
 .click-value {
-    position: absolute;
-    color: #f7f7f7;
+    position: fixed;
+    color: #3b82f6;
     font-weight: bold;
-    font-size: 2rem;
-    text-shadow: 1 1 10px rgba(59, 130, 246, 0.5);
+    font-size: 1.5rem;
     pointer-events: none;
     z-index: 1000;
-    animation: flyToHeader 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    will-change: transform, opacity;
 }
-
-@keyframes flyToHeader {
-    0% {
-        left: 50%;
-        top: 85%;
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-    }
-    30% {
-        left: 70%;
-        top: 60%;
-        transform: translate(-50%, -50%) scale(1.2);
-        opacity: 1;
-    }
-    60% {
-        left: 30%;
-        top: 30%;
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-    }
-    90% {
-        left: 50%;
-        top: 12.5%;
-        transform: translate(-50%, -50%) scale(0.8);
-        opacity: 1;
-    }
-    100% {
-        left: 50%;
-        top: 12.5%;
-        transform: translate(-50%, -50%) scale(0.5);
-        opacity: 0;
-    }
-}
-
-
 
 /* Energy bar styles */
 .energy-bar {
@@ -307,7 +279,6 @@ text-shadow:
     overflow: hidden;
 }
 
-
 @keyframes shine {
     0% { background-position: 200% center; }
     100% { background-position: -200% center; }
@@ -345,50 +316,51 @@ text-shadow:
 @keyframes wave {
     100% { transform: translateX(100%); }
 }
-  .boost-animation {
-      position: absolute;
-      top: 60%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 300px;
-      height: 300px;
-      pointer-events: none;
-  }
 
-  .boost-animation::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%);
-      animation: glowPulse 2s ease-in-out infinite;
-      z-index: -1;
-  }
+.boost-animation {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    pointer-events: none;
+}
 
-  .boost-animation img {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      opacity: 0.7;
-      filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
-  }
+.boost-animation::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%);
+    animation: glowPulse 2s ease-in-out infinite;
+    z-index: -1;
+}
 
-  .boost-animation img:nth-child(1) { animation: rotate1 2s linear infinite; }
-  .boost-animation img:nth-child(2) { animation: rotate2 3s linear infinite; }
-  .boost-animation img:nth-child(3) { animation: rotate3 4s linear infinite reverse; }
-  .boost-animation img:nth-child(4) { animation: rotate4 5s linear infinite; }
-  .boost-animation img:nth-child(5) { animation: rotate5 3.5s linear infinite reverse; }
-  .boost-animation img:nth-child(6) { animation: rotate6 2.5s linear infinite; }
+.boost-animation img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+}
 
-  @keyframes glowPulse {
-      0% { transform: scale(1); opacity: 0.5; }
-      50% { transform: scale(1.2); opacity: 0.8; }
-      100% { transform: scale(1); opacity: 0.5; }
-  }
+.boost-animation img:nth-child(1) { animation: rotate1 2s linear infinite; }
+.boost-animation img:nth-child(2) { animation: rotate2 3s linear infinite; }
+.boost-animation img:nth-child(3) { animation: rotate3 4s linear infinite reverse; }
+.boost-animation img:nth-child(4) { animation: rotate4 5s linear infinite; }
+.boost-animation img:nth-child(5) { animation: rotate5 3.5s linear infinite reverse; }
+.boost-animation img:nth-child(6) { animation: rotate6 2.5s linear infinite; }
 
-  @keyframes rotate1 { to { transform: rotate(360deg); filter: hue-rotate(0deg); } }
-  @keyframes rotate2 { to { transform: rotate(-360deg)scale(0.8); filter: hue-rotate(60deg); } }
-  @keyframes rotate3 { to { transform: rotate(360deg) scale(1.1); filter: hue-rotate(120deg); } }
-  @keyframes rotate4 { to { transform: rotate(-360deg) scale(0.9); filter: hue-rotate(180deg); } }
-  @keyframes rotate5 { to { transform: rotate(360deg) scale(1.05); filter: hue-rotate(240deg); } }
-  @keyframes rotate6 { to { transform: rotate(-360deg) scale(0.95); filter: hue-rotate(300deg); } }
+@keyframes glowPulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 0.5; }
+}
+
+@keyframes rotate1 { to { transform: rotate(-360deg); filter: hue-rotate(0deg); } }
+@keyframes rotate2 { to { transform: rotate(-360deg); filter: hue-rotate(60deg); } }
+@keyframes rotate3 { to { transform: rotate(360deg); filter: hue-rotate(120deg); } }
+@keyframes rotate4 { to { transform: rotate(360deg); filter: hue-rotate(180deg); } }
+@keyframes rotate5 { to { transform: rotate(360deg); filter: hue-rotate(240deg); } }
+@keyframes rotate6 { to { transform: rotate(-360deg); filter: hue-rotate(300deg); } }

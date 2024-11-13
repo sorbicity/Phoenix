@@ -148,18 +148,24 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+  .referral-code {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(59, 130, 246, 0.1);
+      padding: 10px;
+      border-radius: 10px;
+      margin: 15px 0;
+  }
 
-.referral-code {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: rgba(59, 130, 246, 0.1);
-    padding: 10px;
-    border-radius: 10px;
-    margin: 15px 0;
-}
-
+  .referral-code span {
+      font-size: 0.8rem;
+      word-break: break-all;
+      max-width: calc(100% - 40px); /* فضا برای دکمه کپی */
+      overflow: hidden;
+      text-overflow: ellipsis;
+  }
 .copy-btn {
     background: #3b82f6;
     border: none;

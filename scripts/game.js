@@ -128,23 +128,40 @@ function copyReferralCode() {
     }, 2000);
   });
 }
-function createFloatingNumber(value) {
+function createFloatingNumber() {
   const floatingNumber = document.createElement('div');
-  floatingNumber.textContent = `+${value}`;
+  floatingNumber.textContent = `+${clickP}`;
   floatingNumber.className = 'click-value';
-  floatingNumber.style.left = `${event.clientX}px`;
-  floatingNumber.style.top = `${event.clientY}px`;
+
+  // شروع از نوار پیشرفت
+  const progressBar = document.querySelector('.progress-bar');
+  const startRect = progressBar.getBoundingClientRect();
+  const startX = startRect.left + (startRect.width / 2);
+  const startY = startRect.top;
+
+  floatingNumber.style.left = `${startX}px`;
+  floatingNumber.style.top = `${startY}px`;
+
   document.body.appendChild(floatingNumber);
 
-  setTimeout(() => {
-    floatingNumber.style.transform = 'translateY(-50px)';
-    floatingNumber.style.opacity = '0';
-  }, 50);
+  // حرکت به سمت شمارنده سکه‌ها
+  const coinsCounter = document.querySelector('.coins');
+  const targetRect = coinsCounter.getBoundingClientRect();
 
-  setTimeout(() => {
-    document.body.removeChild(floatingNumber);
-  }, 500);
+  floatingNumber.animate([
+    { transform: 'translate(-50%, 0) scale(1)', opacity: 1, color: '#3b82f6' },
+    { transform: 'translate(-50%, -50px) scale(2)', opacity: 1, color: '#3b82f6' },
+    { transform: `translate(-50%, ${targetRect.top - startY}px) scale(0.7)`, opacity: 1, color: '#ffffff' }
+  ], {
+    duration: 2000,
+    easing: 'cubic-bezier(0.1, 1, 0.1, 1)'
+  });
+
+  setTimeout(() => floatingNumber.remove(), 1000);
 }
+
+
+
 
 largeCoin.addEventListener('click', () => {
   if (energy >= clickP && !isCovered) {
