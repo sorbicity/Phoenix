@@ -70,6 +70,10 @@ function saveUserState() {
         multitap: document.getElementById('feeCoinTap').textContent,
         energyLimit: document.getElementById('feeTotalEnergy').textContent, 
         recharging: document.getElementById('feeRegEnergy').textContent
+      },
+      dailyBoosts: {
+        tapBoostCount: document.getElementById('boost_tap_cont').textContent,
+        fullChargeCount: document.getElementById('full_chargh_cont').textContent
       }
     }
   };
@@ -121,7 +125,21 @@ function loadUserState() {
     document.getElementById('lvlCoinTap').textContent = `${multitapLevel + 1} level`;
     document.getElementById('lvlTotalEnergy').textContent = `${energyLimitLevel + 1} level`;
     document.getElementById('lvlRegEnergy').textContent = `${rechargingLevel + 1} level`;
-  
+    
+        // بازیابی تعداد ارتقاء‌های روزانه
+    if (state.game.dailyBoosts) {
+      document.getElementById('boost_tap_cont').textContent = state.game.dailyBoosts.tapBoostCount;
+      document.getElementById('full_chargh_cont').textContent = state.game.dailyBoosts.fullChargeCount;
+          
+      // غیرفعال کردن دکمه‌ها اگر به حداکثر رسیده‌اند
+      if (state.game.dailyBoosts.tapBoostCount >= 3) {
+        document.querySelector('.booster-btn.left-btn').disabled = true;
+      }
+      if (state.game.dailyBoosts.fullChargeCount >= 3) {
+        document.querySelector('.booster-btn.right-btn').disabled = true;
+      }
+    }
+    
 
     updateDisplays();
     updateBoostPage();
