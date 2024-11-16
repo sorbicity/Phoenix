@@ -36,6 +36,54 @@ document.documentElement.style.setProperty('--tg-theme-bg-color', '#1e293b');
 document.documentElement.style.setProperty('--tg-theme-text-color', '#ffffff');
 document.documentElement.style.setProperty('--tg-theme-button-color', '#3b82f6');
 document.documentElement.style.setProperty('--tg-theme-button-text-color', '#ffffff');
+function resetGameData() {
+  // ریست متغیرهای اصلی
+  coins = 0;
+  league = 'Bronze';
+  highestLeague = 'Bronze';
+  tEnergy = 500;
+  energy = 500;
+  clickP = 1;
+  regen = 1;
+  fullSh = 0;
+  bostp = 0;
+  multitapLevel = 0;
+  energyLimitLevel = 0;
+  rechargingLevel = 0;
+  hasTapBot = false;
+
+  // پاک کردن تسک‌های انجام شده
+  document.querySelectorAll('.task-item').forEach(task => {
+    task.classList.remove('completed');
+    const icon = task.querySelector('.fa-check');
+    if (icon) {
+      icon.className = 'fas fa-chevron-right';
+      icon.style.color = '';
+    }
+    task.style.opacity = '';
+    task.style.cursor = 'pointer';
+  });
+
+  // ریست قیمت‌ها و سطح‌ها
+  document.getElementById('feeCoinTap').textContent = '250';
+  document.getElementById('feeTotalEnergy').textContent = '250';
+  document.getElementById('feeRegEnergy').textContent = '25000';
+  document.getElementById('lvlCoinTap').textContent = '1 level';
+  document.getElementById('lvlTotalEnergy').textContent = '1 level';
+  document.getElementById('lvlRegEnergy').textContent = '1 level';
+
+  // ریست بوسترهای روزانه
+  document.getElementById('boost_tap_cont').textContent = '0';
+  document.getElementById('full_chargh_cont').textContent = '0';
+  document.querySelector('.booster-btn.left-btn').disabled = false;
+  document.querySelector('.booster-btn.right-btn').disabled = false;
+
+  // پاک کردن localStorage
+  localStorage.removeItem('gameState');
+
+  // آپدیت نمایش
+  updateDisplays();
+}
 
 // ذخیره در CloudStorage تلگرام
 function saveUserState() {
