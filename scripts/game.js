@@ -687,34 +687,6 @@ function buyBot() {
   }
 }
 
-// ایجاد کد دعوت منحصر به فرد برای هر کاربر
-function generateReferralCode() {
-  const tg = window.Telegram?.WebApp || {
-    initDataUnsafe: {
-      user: {
-        id: Math.random().toString(36),
-      },
-    },
-  };
-
-  const userId = tg.initDataUnsafe?.user?.id || Math.random().toString(36);
-  return `REF${userId}${Math.random().toString(36).substr(2, 6)}`.toUpperCase();
-}
-
-function generateTelegramRefLink() {
-  const botUsername = 'CryptooTapBot'; // نام بات تلگرام شما
-  const userCode = generateReferralCode(); // کد منحصر به فرد کاربر
-  return `https://t.me/${botUsername}?start=${userCode}`;
-}
-
-function updateReferralUI() {
-  const referralCodeElement = document.getElementById('referralCode');
-  const userReferralCode = generateReferralCode();
-  const telegramLink = generateTelegramRefLink();
-
-  // فقط آپدیت متن کد ریفرال
-  referralCodeElement.textContent = telegramLink;
-}
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(() => {
     const copyBtn = document.querySelector('.copy-btn');
@@ -756,16 +728,7 @@ function checkReferral() {
     saveInvitedUser(referrer, invitedUser);
   }
 }
-// ذخیره اطلاعات کاربر دعوت شده
-function saveInvitedUser(referrer, user) {
-  let invitedUsers = JSON.parse(localStorage.getItem('invitedUsers') || '{}');
-  if (!invitedUsers[referrer]) {
-    invitedUsers[referrer] = [];
-  }
-  invitedUsers[referrer].push(user);
-  localStorage.setItem('invitedUsers', JSON.stringify(invitedUsers));
-  updateInvitedUsersList();
-}
+
 
 // آپدیت لیست کاربران دعوت شده
 function updateInvitedUsersList() {
