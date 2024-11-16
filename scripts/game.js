@@ -65,6 +65,11 @@ function saveUserState() {
           id: task.dataset.taskId,
           completed: task.classList.contains('completed')
         }))
+      },
+      boostPrices: {
+        multitap: document.getElementById('feeCoinTap').textContent,
+        energyLimit: document.getElementById('feeTotalEnergy').textContent, 
+        recharging: document.getElementById('feeRegEnergy').textContent
       }
     }
   };
@@ -105,6 +110,18 @@ function loadUserState() {
         }
       });
     }
+   // بازیابی قیمت‌ها
+    if (state.game.boostPrices) {
+      document.getElementById('feeCoinTap').textContent = state.game.boostPrices.multitap;
+      document.getElementById('feeTotalEnergy').textContent = state.game.boostPrices.energyLimit;
+      document.getElementById('feeRegEnergy').textContent = state.game.boostPrices.recharging;
+    }
+
+    // بازیابی سطح‌ها
+    document.getElementById('lvlCoinTap').textContent = `${multitapLevel + 1} level`;
+    document.getElementById('lvlTotalEnergy').textContent = `${energyLimitLevel + 1} level`;
+    document.getElementById('lvlRegEnergy').textContent = `${rechargingLevel + 1} level`;
+  
 
     updateDisplays();
     updateBoostPage();
