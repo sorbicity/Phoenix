@@ -54,43 +54,63 @@ function saveUserState() {
         energyLimitLevel: energyLimitLevel,
         rechargingLevel: rechargingLevel,
         hasTapBot: hasTapBot
+      },
+      dailyBoosters: {
+        fullShield: fullSh,
+        boostPower: bostp
+      },
+      tasks: {
+        completedTasks: document.querySelectorAll('.task-item.completed').length,
+        tasksList: Array.from(document.querySelectorAll('.task-item')).map(task => ({
+          id: task.dataset.taskId,
+          completed: task.classList.contains('completed')
+        }))
       }
     }
   };
 
-  try {
-    const stateString = JSON.stringify(state);
-    localStorage.setItem('gameState', stateString);
-  } catch (error) {
-    console.log('Error saving state:', error);
-  }
+  localStorage.setItem('gameState', JSON.stringify(state));
 }
 
-// بازیابی از CloudStorage تلگرام 
 function loadUserState() {
-  try {
-    const savedState = localStorage.getItem('gameState');
-    if (savedState) {
-      const state = JSON.parse(savedState);
-      
-      // بازیابی متغیرها
-      coins = state.game.coins || 0;
-      league = state.game.league || 'Bronze';
-      highestLeague = state.game.highestLeague || 'Bronze';
-      energy = state.game.energy.current || 500;
-      tEnergy = state.game.energy.max || 500;
-      regen = state.game.energy.regen || 1;
-      multitapLevel = state.game.upgrades.multitapLevel || 0;
-      energyLimitLevel = state.game.upgrades.energyLimitLevel || 0;
-      rechargingLevel = state.game.upgrades.rechargingLevel || 0;
-      hasTapBot = state.game.upgrades.hasTapBot || false;
+  const savedState = localStorage.getItem('gameState');
+  if (savedState) {
+    const state = JSON.parse(savedState);
+    
+    // بازیابی متغیرهای قبلی
+    coins = state.game.coins || 0;
+    league = state.game.league || 'Bronze';
+    highestLeague = state.game.highestLeague || 'Bronze';
+    energy = state.game.energy.current || 500;
+    tEnergy = state.game.energy.max || 500;
+    regen = state.game.energy.regen || 1;
+    
+    // بازیابی ارتقاء‌ها
+    multitapLevel = state.game.upgrades.multitapLevel || 0;
+    energyLimitLevel = state.game.upgrades.energyLimitLevel || 0;
+    rechargingLevel = state.game.upgrades.rechargingLevel || 0;
+    hasTapBot = state.game.upgrades.hasTapBot || false;
+    
+    // بازیابی بوسترهای روزانه
+    fullSh = state.game.dailyBoosters.fullShield || 0;
+    bostp = state.game.dailyBoosters.boostPower || 0;
 
-      updateDisplays();
+    // بازیابی وضعیت تسک‌ها
+    if (state.game.tasks) {
+      state.game.tasks.tasksList.forEach(task => {
+        const taskElement = document.querySelector(`[data-task-id="${task.id}"]`);
+        if (taskElement && task.completed) {
+          taskElement.classList.add('completed');
+          markTaskAsCompleted(taskElement);
+        }
+      });
     }
-  } catch (error) {
-    console.log('Error loading state:', error);
+
+    updateDisplays();
+    updateBoostPage();
   }
 }
+
 
 // ذخیره خودکار
 setInterval(saveUserState, 30000);
