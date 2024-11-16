@@ -209,3 +209,26 @@
     justify-content: center;
     width: 100%;
 }
+
+.action-item[onclick="resetGameData()"] {
+    opacity: 1 !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
+.action-item[onclick="resetGameData()"] i {
+    color: #ff4444 !important;
+}
+
+.action-item[onclick="resetGameData()"] span {
+    color: #ffffff !important;
+}
+
+.action-item[onclick="resetGameData()"]:hover i {
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
