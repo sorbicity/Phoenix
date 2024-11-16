@@ -37,82 +37,62 @@ document.documentElement.style.setProperty('--tg-theme-text-color', '#ffffff');
 document.documentElement.style.setProperty('--tg-theme-button-color', '#3b82f6');
 document.documentElement.style.setProperty('--tg-theme-button-text-color', '#ffffff');
 
-const userState = {
-  userId: tg.initDataUnsafe?.user?.id,
-  game: {
-    coins: coins,
-    league: league,
-    highestLeague: highestLeague,
-    energy: {
-      current: energy,
-      max: tEnergy,
-      regen: regen
-    },
-    upgrades: {
-      multitapLevel: multitapLevel,
-      energyLimitLevel: energyLimitLevel,
-      rechargingLevel: rechargingLevel,
-      hasTapBot: hasTapBot
-    },
-    boosters: {
-      fullShield: fullSh,
-      boostPower: bostp
-    },
-    tasks: {
-      completed: [],
-      rewards: 0
-    },
-    referral: {
-      invitedUsers: [],
-      rewards: 0
-    }
-  }
-};
-
+// ذخیره در CloudStorage تلگرام
 function saveUserState() {
-  userState.game.coins = coins;
-  userState.game.league = league;
-  userState.game.highestLeague = highestLeague;
-  userState.game.energy.current = energy;
-  userState.game.energy.max = tEnergy;
-  userState.game.energy.regen = regen;
-  userState.game.upgrades.multitapLevel = multitapLevel;
-  userState.game.upgrades.energyLimitLevel = energyLimitLevel;
-  userState.game.upgrades.rechargingLevel = rechargingLevel;
-  userState.game.upgrades.hasTapBot = hasTapBot;
-  userState.game.boosters.fullShield = fullSh;
-  userState.game.boosters.boostPower = bostp;
-
-  tg.CloudStorage.setItem('userState', JSON.stringify(userState));
-}
-
-async function loadUserState() {
-  try {
-    const saved = await tg.CloudStorage.getItem('userState');
-    if (saved && saved !== 'undefined' && saved !== 'null') {
-      const loadedState = JSON.parse(saved);
-      if (loadedState && loadedState.game) {
-        coins = loadedState.game.coins;
-        league = loadedState.game.league;
-        highestLeague = loadedState.game.highestLeague;
-        energy = loadedState.game.energy.current;
-        tEnergy = loadedState.game.energy.max;
-        regen = loadedState.game.energy.regen;
-        multitapLevel = loadedState.game.upgrades.multitapLevel;
-        energyLimitLevel = loadedState.game.upgrades.energyLimitLevel;
-        rechargingLevel = loadedState.game.upgrades.rechargingLevel;
-        hasTapBot = loadedState.game.upgrades.hasTapBot;
-        fullSh = loadedState.game.boosters.fullShield;
-        bostp = loadedState.game.boosters.boostPower;
-
-        updateDisplays();
+  const state = {
+    game: {
+      coins: coins,
+      league: league,
+      highestLeague: highestLeague,
+      energy: {
+        current: energy,
+        max: tEnergy,
+        regen: regen
+      },
+      upgrades: {
+        multitapLevel: multitapLevel,
+        energyLimitLevel: energyLimitLevel,
+        rechargingLevel: rechargingLevel,
+        hasTapBot: hasTapBot
       }
     }
-  }catch (error) {
-    console.error('Error loading user state:', error);
+  };
+
+  try {
+    const stateString = JSON.stringify(state);
+    localStorage.setItem('gameState', stateString);
+  } catch (error) {
+    console.log('Error saving state:', error);
   }
 }
-// ذخیره خودکار هر 30 ثانیه
+
+// بازیابی از CloudStorage تلگرام 
+function loadUserState() {
+  try {
+    const savedState = localStorage.getItem('gameState');
+    if (savedState) {
+      const state = JSON.parse(savedState);
+      
+      // بازیابی متغیرها
+      coins = state.game.coins || 0;
+      league = state.game.league || 'Bronze';
+      highestLeague = state.game.highestLeague || 'Bronze';
+      energy = state.game.energy.current || 500;
+      tEnergy = state.game.energy.max || 500;
+      regen = state.game.energy.regen || 1;
+      multitapLevel = state.game.upgrades.multitapLevel || 0;
+      energyLimitLevel = state.game.upgrades.energyLimitLevel || 0;
+      rechargingLevel = state.game.upgrades.rechargingLevel || 0;
+      hasTapBot = state.game.upgrades.hasTapBot || false;
+
+      updateDisplays();
+    }
+  } catch (error) {
+    console.log('Error loading state:', error);
+  }
+}
+
+// ذخیره خودکار
 setInterval(saveUserState, 30000);
 
 // ذخیره هنگام خروج
@@ -120,6 +100,7 @@ window.addEventListener('beforeunload', saveUserState);
 
 // بازیابی هنگام ورود
 document.addEventListener('DOMContentLoaded', loadUserState);
+
 
 const CLICK_THRESHOLD = 500; // milliseconds between clicks
 const TIME_LIMIT = 60000; // 1 minute in milliseconds
