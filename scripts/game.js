@@ -87,27 +87,31 @@ function saveUserState() {
 }
 
 async function loadUserState() {
-  const saved = await tg.CloudStorage.getItem('userState');
-  if (saved) {
-    const loadedState = JSON.parse(saved);
-    
-    coins = loadedState.game.coins;
-    league = loadedState.game.league;
-    highestLeague = loadedState.game.highestLeague;
-    energy = loadedState.game.energy.current;
-    tEnergy = loadedState.game.energy.max;
-    regen = loadedState.game.energy.regen;
-    multitapLevel = loadedState.game.upgrades.multitapLevel;
-    energyLimitLevel = loadedState.game.upgrades.energyLimitLevel;
-    rechargingLevel = loadedState.game.upgrades.rechargingLevel;
-    hasTapBot = loadedState.game.upgrades.hasTapBot;
-    fullSh = loadedState.game.boosters.fullShield;
-    bostp = loadedState.game.boosters.boostPower;
+  try {
+    const saved = await tg.CloudStorage.getItem('userState');
+    if (saved && saved !== 'undefined' && saved !== 'null') {
+      const loadedState = JSON.parse(saved);
+      if (loadedState && loadedState.game) {
+        coins = loadedState.game.coins;
+        league = loadedState.game.league;
+        highestLeague = loadedState.game.highestLeague;
+        energy = loadedState.game.energy.current;
+        tEnergy = loadedState.game.energy.max;
+        regen = loadedState.game.energy.regen;
+        multitapLevel = loadedState.game.upgrades.multitapLevel;
+        energyLimitLevel = loadedState.game.upgrades.energyLimitLevel;
+        rechargingLevel = loadedState.game.upgrades.rechargingLevel;
+        hasTapBot = loadedState.game.upgrades.hasTapBot;
+        fullSh = loadedState.game.boosters.fullShield;
+        bostp = loadedState.game.boosters.boostPower;
 
-    updateDisplays();
+        updateDisplays();
+      }
+    }
+  }catch (error) {
+    console.error('Error loading user state:', error);
   }
 }
-
 // ذخیره خودکار هر 30 ثانیه
 setInterval(saveUserState, 30000);
 
@@ -818,11 +822,9 @@ function calculateUserLevel(user) {
 
 // اجرای توابع در زمان لود صفحه
 document.addEventListener('DOMContentLoaded', () => {
-  updateReferralCode();
+  updateReferralUI();
   checkReferral();
   updateInvitedUsersList();
-
-  // آپدیت سطح کاربران هر 24 ساعت
   setInterval(updateInvitedUsersLevel, 24 * 60 * 60 * 1000);
 });
 
