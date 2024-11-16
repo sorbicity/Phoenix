@@ -184,6 +184,30 @@ function copyReferralCode() {
     }, 2000);
   });
 }
+
+function updateInvitedUsersList() {
+  const userList = document.querySelector('.user-list');
+  const invitedUsers = JSON.parse(localStorage.getItem('invitedUsers') || '{}');
+  const currentUserCode = generateReferralCode();
+  const userInvites = invitedUsers[currentUserCode] || [];
+
+  userList.innerHTML = userInvites.map(user => `
+    <div class="user-item">
+      <div class="user-info">
+        ${user.photo 
+          ? `<img src="${user.photo}" alt="${user.name}" class="user-avatar">`
+          : '<i class="fas fa-user-circle"></i>'
+        }
+        <span>${user.name}</span>
+      </div>
+      <div class="user-level">
+        <i class="fas fa-trophy"></i>
+        <span>${user.league}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
 function createFloatingNumber() {
   const floatingNumber = document.createElement('div');
   floatingNumber.textContent = `+${clickP}`;
