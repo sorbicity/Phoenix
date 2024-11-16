@@ -39,91 +39,82 @@ document.documentElement.style.setProperty('--tg-theme-button-text-color', '#fff
 
 const userState = {
   userId: tg.initDataUnsafe?.user?.id,
-  username: tg.initDataUnsafe?.user?.username,
-  wallet: {
-    address: null,
-    balance: 0,
-    lastConnected: null
-  },
   game: {
-    coins: 0,
-    totalEarnedCoins: 0,
-    spentCoins: 0,
-    currentLeague: 'Bronze',
-    highestLeague: 'Bronze',
+    coins: coins,
+    league: league,
+    highestLeague: highestLeague,
     energy: {
-      current: 500,
-      max: 500,
-      regen: 1
+      current: energy,
+      max: tEnergy,
+      regen: regen
+    },
+    upgrades: {
+      multitapLevel: multitapLevel,
+      energyLimitLevel: energyLimitLevel,
+      rechargingLevel: rechargingLevel,
+      hasTapBot: hasTapBot
+    },
+    boosters: {
+      fullShield: fullSh,
+      boostPower: bostp
+    },
+    tasks: {
+      completed: [],
+      rewards: 0
+    },
+    referral: {
+      invitedUsers: [],
+      rewards: 0
     }
-  },
-  upgrades: {
-    multitapLevel: 0,
-    energyLimitLevel: 0,
-    rechargingLevel: 0,
-    hasTapBot: false
-  },
-  tasks: {
-    completed: [],
-    rewards: 0
-  },
-  referral: {
-    code: null,
-    invitedFriends: [],
-    rewards: 0
-  },
-  stats: {
-    totalClicks: 0,
-    onlineTime: 0,
-    lastOnline: null,
-    offlineEarnings: 0
   }
 };
 
-// ذخیره در CloudStorage تلگرام
 function saveUserState() {
   userState.game.coins = coins;
-  userState.game.currentLeague = league;
+  userState.game.league = league;
   userState.game.highestLeague = highestLeague;
-  userState.game.energy.max = tEnergy;
   userState.game.energy.current = energy;
-  userState.upgrades.multitapLevel = multitapLevel;
-  userState.upgrades.energyLimitLevel = energyLimitLevel;
-  userState.upgrades.rechargingLevel = rechargingLevel;
-  userState.upgrades.hasTapBot = hasTapBot;
+  userState.game.energy.max = tEnergy;
+  userState.game.energy.regen = regen;
+  userState.game.upgrades.multitapLevel = multitapLevel;
+  userState.game.upgrades.energyLimitLevel = energyLimitLevel;
+  userState.game.upgrades.rechargingLevel = rechargingLevel;
+  userState.game.upgrades.hasTapBot = hasTapBot;
+  userState.game.boosters.fullShield = fullSh;
+  userState.game.boosters.boostPower = bostp;
 
   tg.CloudStorage.setItem('userState', JSON.stringify(userState));
 }
 
-// بازیابی از CloudStorage تلگرام
 async function loadUserState() {
   const saved = await tg.CloudStorage.getItem('userState');
   if (saved) {
-    Object.assign(userState, JSON.parse(saved));
+    const loadedState = JSON.parse(saved);
+    
+    coins = loadedState.game.coins;
+    league = loadedState.game.league;
+    highestLeague = loadedState.game.highestLeague;
+    energy = loadedState.game.energy.current;
+    tEnergy = loadedState.game.energy.max;
+    regen = loadedState.game.energy.regen;
+    multitapLevel = loadedState.game.upgrades.multitapLevel;
+    energyLimitLevel = loadedState.game.upgrades.energyLimitLevel;
+    rechargingLevel = loadedState.game.upgrades.rechargingLevel;
+    hasTapBot = loadedState.game.upgrades.hasTapBot;
+    fullSh = loadedState.game.boosters.fullShield;
+    bostp = loadedState.game.boosters.boostPower;
 
-    // همگام‌سازی متغیرهای بازی با userState
-    coins = userState.game.coins;
-    league = userState.game.currentLeague;
-    highestLeague = userState.game.highestLeague;
-    tEnergy = userState.game.energy.max;
-    energy = userState.game.energy.current;
-    clickP = userState.upgrades.multitapLevel + 1;
-    regen = userState.upgrades.rechargingLevel + 1;
-    multitapLevel = userState.upgrades.multitapLevel;
-    energyLimitLevel = userState.upgrades.energyLimitLevel;
-    rechargingLevel = userState.upgrades.rechargingLevel;
-    hasTapBot = userState.upgrades.hasTapBot;
-
-    updateAllDisplays();
+    updateDisplays();
   }
 }
-// آپدیت خودکار
+
+// ذخیره خودکار هر 30 ثانیه
 setInterval(saveUserState, 30000);
 
-// ذخیره هنگام بستن مینی اپ
-tg.onEvent('viewportChanged', saveUserState);
+// ذخیره هنگام خروج
+window.addEventListener('beforeunload', saveUserState);
 
-// بازیابی هنگام باز کردن مینی اپ
+// بازیابی هنگام ورود
 document.addEventListener('DOMContentLoaded', loadUserState);
 
 const CLICK_THRESHOLD = 500; // milliseconds between clicks
