@@ -20,6 +20,7 @@
 .taskPage .stats {
     height: 15%;
     background: linear-gradient(135deg, rgba(17, 25, 40, 0.95), rgba(28, 41, 66, 0.95));
+    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     border-radius: 15px;
     margin: 2px;
@@ -125,6 +126,7 @@
 
 .task-item {
     background: rgba(17, 25, 40, 0.95);
+    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 15px;

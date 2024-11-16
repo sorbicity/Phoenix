@@ -154,6 +154,25 @@ function updateDisplays() {
   updateBoostPage();
   updateTaskPage();
 }
+// تولید کد دعوت منحصر به فرد
+function generateReferralCode() {
+  const userId = tg.initDataUnsafe?.user?.id || Math.random().toString(36);
+  return `REF${userId}${Math.random().toString(36).substr(2, 6)}`.toUpperCase();
+}
+
+// ساخت لینک دعوت تلگرام 
+function generateTelegramRefLink() {
+  const botUsername = 'PhoenixINC_bot';
+  const userCode = generateReferralCode();
+  return `https://t.me/${botUsername}?start=${userCode}`;
+}
+
+// آپدیت رابط کاربری رفرال
+function updateReferralUI() {
+  const referralCodeElement = document.getElementById('referralCode');
+  const telegramLink = generateTelegramRefLink();
+  referralCodeElement.textContent = telegramLink;
+}
 
 function copyReferralCode() {
   const code = document.getElementById('referralCode').textContent;
